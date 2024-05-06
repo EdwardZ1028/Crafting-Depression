@@ -1,1 +1,2 @@
-print("Crafting, Rouge-like Idk")
+import pygame
+
