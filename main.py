@@ -58,7 +58,7 @@ run = True
 while run:
 
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_SPACE]:
+    if keys[pygame.K_t]:
         start = True
     if keys[pygame.K_r]:
         start = False
@@ -75,6 +75,10 @@ while run:
     keys = pygame.key.get_pressed()  # checking pressed keys
     if keys[pygame.K_s]:
         f.move_direction("down")
+
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_SPACE]:
+
 
     # collision
 
@@ -103,12 +107,6 @@ while run:
         screen.blit(display_message, (0, 15))
         screen.blit(f.image, f.rect)
         screen.blit(e.image, e.rect)
-        pygame.display.update()
-
-    if (countdown + elapsed_time) < 0:
-        screen.fill((r, g, b))
-        screen.blit(display_win_message, (100, 250))
-        screen.blit(display_score_message, (100, 270))
         pygame.display.update()
 
 
