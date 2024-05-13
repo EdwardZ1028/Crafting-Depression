@@ -49,6 +49,7 @@ display_lose_message = my_font.render(lose_message, True, (255, 255, 255))
 display_elapsed_time = my_font.render("Time Left: " + str(countdown), True, (255, 255, 255))
 
 f = Player(40, 60)
+a_1 = P_attack_1(7, 7)
 e = Enemy(200, 100)
 
 # The loop will carry on until the user exits the game (e.g. clicks the close button).
@@ -78,6 +79,7 @@ while run:
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_SPACE]:
+        a_1 = P_attack_1(40, 60)
 
 
     # collision
@@ -107,6 +109,7 @@ while run:
         screen.blit(display_message, (0, 15))
         screen.blit(f.image, f.rect)
         screen.blit(e.image, e.rect)
+        screen.blit(a_1.image, a_1.rect)
         pygame.display.update()
 
 
