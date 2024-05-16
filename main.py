@@ -64,24 +64,6 @@ while run:
     if keys[pygame.K_r]:
         start = False
 
-    keys = pygame.key.get_pressed()  # checking pressed keys
-    if keys[pygame.K_d]:
-        f.move_direction("right")
-    keys = pygame.key.get_pressed()  # checking pressed keys
-    if keys[pygame.K_a]:
-        f.move_direction("left")
-    keys = pygame.key.get_pressed()  # checking pressed keys
-    if keys[pygame.K_w]:
-        f.move_direction("up")
-    keys = pygame.key.get_pressed()  # checking pressed keys
-    if keys[pygame.K_s]:
-        f.move_direction("down")
-
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_SPACE]:
-        a_1 = P_attack_1(40, 60)
-
-
     # collision
 
 
@@ -89,8 +71,30 @@ while run:
     for event in pygame.event.get():  # User did something
         if event.type == pygame.QUIT:  # If user clicked close
             run = False
+        keys = pygame.key.get_pressed()  # checking pressed keys
+        if keys[pygame.K_d]:
+            f.move_direction("right")
+        keys = pygame.key.get_pressed()  # checking pressed keys
+        if keys[pygame.K_a]:
+            f.move_direction("left")
+        keys = pygame.key.get_pressed()  # checking pressed keys
+        if keys[pygame.K_w]:
+            f.move_direction("up")
+        keys = pygame.key.get_pressed()  # checking pressed keys
+        if keys[pygame.K_s]:
+            f.move_direction("down")
+
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_SPACE]:
+            a_1 = P_attack_1(40, 60)
+
+        if event.type == pygame.MOUSEBUTTONUP:
+            print("Mouse position", event.pos, "Player position:", f.rect.x, f.rect.y)
+            mouse_x = event.pos[0]
+            mouse_y = event.pos[1]
 
     if start is False:
+
         current_time = time.time()
         start_time = current_time
         elapsed_time = 0
