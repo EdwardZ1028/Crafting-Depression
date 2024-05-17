@@ -12,8 +12,3 @@ class P_attack_1:
         self.rect = pygame.Rect(self.x, self.y, self.image_size[0]*0.4, self.image_size[1]*0.4)
         self.pos = (x, y)
         self.delta = .3
-
-    def attack_movement_1(self, x, y):
-        if self.x > 0:
-            self.x = self.x - self.delta
-

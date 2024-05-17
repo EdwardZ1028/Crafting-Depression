@@ -1,5 +1,6 @@
 import pygame
 import random
+import math
 import time
 from player import Player
 from enemy import Enemy
@@ -92,6 +93,19 @@ while run:
             print("Mouse position", event.pos, "Player position:", f.rect.x, f.rect.y)
             mouse_x = event.pos[0]
             mouse_y = event.pos[1]
+            slope = (mouse_y - f.rect.y)/(mouse_x - f.rect.x)
+            y_int = mouse_y - slope * mouse_x
+            a_1_x = f.rect.x + 1
+            a_1_y = slope * a_1_x + y_int
+            a_1 = P_attack_1(a_1_x, a_1_y)
+            print(slope)
+            print(y_int)
+            print(a_1_y)
+            print(a_1_x)
+
+
+
+
 
     if start is False:
 
