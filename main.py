@@ -11,6 +11,7 @@ from player_attacks import P_attack_1
 # set up pygame modules
 pygame.init()
 pygame.font.init()
+clock = pygame.time.Clock()
 my_font = pygame.font.SysFont('Arial', 15)
 pygame.display.set_caption("Coin Collector!")
 
@@ -48,7 +49,6 @@ display_start_message = my_font.render(start_message, True, (255, 255, 255))
 display_win_message = my_font.render(win_message, True, (255, 255, 255))
 display_lose_message = my_font.render(lose_message, True, (255, 255, 255))
 display_elapsed_time = my_font.render("Time Left: " + str(countdown), True, (255, 255, 255))
-
 f = Player(40, 60)
 a_1 = P_attack_1(7, 7)
 e = Enemy(200, 100)
@@ -59,6 +59,7 @@ run = True
 # -------- Main Program Loop -----------
 while run:
 
+    clock.tick(60)
     keys = pygame.key.get_pressed()
     if keys[pygame.K_t]:
         start = True
@@ -69,6 +70,7 @@ while run:
 
 
     # --- Main event loop
+    while
     for event in pygame.event.get():  # User did something
         if event.type == pygame.QUIT:  # If user clicked close
             run = False
@@ -95,13 +97,12 @@ while run:
             mouse_y = event.pos[1]
             slope = (mouse_y - f.rect.y)/(mouse_x - f.rect.x)
             y_int = mouse_y - slope * mouse_x
-            a_1_x = f.rect.x + 1
-            a_1_y = slope * a_1_x + y_int
-            a_1 = P_attack_1(a_1_x, a_1_y)
+            x_length = mouse_x - f.rect.x
+            y_length = f.rect.y - mouse_y
+            angle = math. atan(x_length / y_length)
             print(slope)
             print(y_int)
-            print(a_1_y)
-            print(a_1_x)
+            print(angle)
 
 
 
