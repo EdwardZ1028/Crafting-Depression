@@ -16,12 +16,12 @@ my_font = pygame.font.SysFont('Arial', 15)
 pygame.display.set_caption("Coin Collector!")
 
 # set up variables for the display
-SCREEN_HEIGHT = 370
-SCREEN_WIDTH = 530
+SCREEN_HEIGHT = 700
+SCREEN_WIDTH = 1200
 size = (SCREEN_WIDTH, SCREEN_HEIGHT)
 screen = pygame.display.set_mode(size)
 
-start_message = "Use WASD to move and collect as may coins as you can in 10 seconds!"
+start_message = "Use WASD to move , Right click to attack, and shift to dash!"
 name = "Collect coins as fast as you can!"
 win_message = "TIME'S UP!"
 lose_message = "YOU LOSE!"
@@ -66,26 +66,42 @@ while run:
     if keys[pygame.K_r]:
         start = False
 
-    # collision
+    keys = pygame.key.get_pressed()  # checking pressed keys
+    if keys[pygame.K_d]:
+        f.move_direction("right")
+    keys = pygame.key.get_pressed()  # checking pressed keys
+    if keys[pygame.K_a]:
+        f.move_direction("left")
+        keys = pygame.key.get_pressed()  # checking pressed keys
+    if keys[pygame.K_w]:
+        f.move_direction("up")
+    keys = pygame.key.get_pressed()  # checking pressed keys
+    if keys[pygame.K_s]:
+        f.move_direction("down")
+
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LSHIFT]:
+        pygame.time.get_ticks
+        keys = pygame.key.get_pressed()  # checking pressed keys
+        if keys[pygame.K_d]:
+            f.move_dash("right")
+        keys = pygame.key.get_pressed()  # checking pressed keys
+        if keys[pygame.K_a]:
+            f.move_dash("left")
+            keys = pygame.key.get_pressed()  # checking pressed keys
+        if keys[pygame.K_w]:
+            f.move_dash("up")
+        keys = pygame.key.get_pressed()  # checking pressed keys
+        if keys[pygame.K_s]:
+            f.move_dash("down")
+
+
 
 
     # --- Main event loop
-    while
     for event in pygame.event.get():  # User did something
         if event.type == pygame.QUIT:  # If user clicked close
             run = False
-        keys = pygame.key.get_pressed()  # checking pressed keys
-        if keys[pygame.K_d]:
-            f.move_direction("right")
-        keys = pygame.key.get_pressed()  # checking pressed keys
-        if keys[pygame.K_a]:
-            f.move_direction("left")
-        keys = pygame.key.get_pressed()  # checking pressed keys
-        if keys[pygame.K_w]:
-            f.move_direction("up")
-        keys = pygame.key.get_pressed()  # checking pressed keys
-        if keys[pygame.K_s]:
-            f.move_direction("down")
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_SPACE]:
