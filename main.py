@@ -5,6 +5,7 @@ import time
 from player import Player
 from enemy import Enemy
 from player_attacks import P_attack_1
+from enemy_attack import Enemy_attack
 
 
 
@@ -29,29 +30,37 @@ message = "Collision not detected"
 
 number = random.randint(1, 3)
 remainder = random.randint(0, 1)
-current_time = time.time()
-start_time = current_time
-red_start_time = current_time
+start_time = 0
 elapsed_time = 0
 countdown = 10.00
 score = 0
 r = 50
 g = 0
 b = 100
+hit_points = 3
 collision = False
 start = False
+boss_move = True
+attacks = []
+e_attacks = []
+cooldown_P_attk = []
+cooldown_P_attk.append(0)
+cooldown_P_dash = []
+cooldown_P_dash.append(0)
 
 # render the text for later
 display_name = my_font.render(name, True, (255, 255, 255))
 display_message = my_font.render(message, True, (255, 255, 255))
 display_score_message = my_font.render("Score: " + str(score), True, (255, 255, 255))
 display_start_message = my_font.render(start_message, True, (255, 255, 255))
+display_hit_points = my_font.render("Health: " + str(hit_points), True, (255, 255, 255))
 display_win_message = my_font.render(win_message, True, (255, 255, 255))
 display_lose_message = my_font.render(lose_message, True, (255, 255, 255))
 display_elapsed_time = my_font.render("Time Left: " + str(countdown), True, (255, 255, 255))
 f = Player(40, 60)
-a_1 = P_attack_1(7, 7)
-e = Enemy(200, 100)
+a_1 = P_attack_1(7, 7, 7, 7)
+e = Enemy(200, 100, 7, 7)
+e_1 = Enemy_attack(100, 200)
 
 # The loop will carry on until the user exits the game (e.g. clicks the close button).
 run = True
@@ -60,6 +69,14 @@ run = True
 while run:
 
     clock.tick(60)
+    current_time = time.time()
+    elapsed_time = current_time - start_time
+
+    if random.randint(1, 30) == 15:
+        x = random.randint(50, 1150)
+        e_1 = Enemy_attack(x, 0)
+        e_attacks.append(e_1)
+
     keys = pygame.key.get_pressed()
     if keys[pygame.K_t]:
         start = True
@@ -79,21 +96,33 @@ while run:
     if keys[pygame.K_s]:
         f.move_direction("down")
 
+
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LSHIFT]:
-        pygame.time.get_ticks
-        keys = pygame.key.get_pressed()  # checking pressed keys
-        if keys[pygame.K_d]:
-            f.move_dash("right")
-        keys = pygame.key.get_pressed()  # checking pressed keys
-        if keys[pygame.K_a]:
-            f.move_dash("left")
+        cooldown_P_dash.append(pygame.time.get_ticks())
+        if cooldown_P_dash[0] - cooldown_P_dash[1] == 500:
             keys = pygame.key.get_pressed()  # checking pressed keys
-        if keys[pygame.K_w]:
-            f.move_dash("up")
-        keys = pygame.key.get_pressed()  # checking pressed keys
-        if keys[pygame.K_s]:
-            f.move_dash("down")
+            if keys[pygame.K_d]:
+                f.move_dash("right")
+                cooldown_P_dash.remove(cooldown_P_dash[0])
+            keys = pygame.key.get_pressed()  # checking pressed keys
+            if keys[pygame.K_a]:
+                f.move_dash("left")
+                cooldown_P_dash.remove(cooldown_P_dash[0])
+        else:
+            cooldown_P_dash.remove(cooldown_P_dash[0])
+
+
+
+    if boss_move == False and elapsed_time % 2 == 1:
+        boss_move = True
+
+    if boss_move == True:
+        move_to_x = random.randint(100, 1100)
+        move_to_y = random.randint(100, 600)
+        e = Enemy(e.rect.x, e.rect.y, move_to_x, move_to_y)
+        boss_move = False
+
 
 
 
@@ -103,22 +132,16 @@ while run:
         if event.type == pygame.QUIT:  # If user clicked close
             run = False
 
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_SPACE]:
-            a_1 = P_attack_1(40, 60)
-
         if event.type == pygame.MOUSEBUTTONUP:
-            print("Mouse position", event.pos, "Player position:", f.rect.x, f.rect.y)
-            mouse_x = event.pos[0]
-            mouse_y = event.pos[1]
-            slope = (mouse_y - f.rect.y)/(mouse_x - f.rect.x)
-            y_int = mouse_y - slope * mouse_x
-            x_length = mouse_x - f.rect.x
-            y_length = f.rect.y - mouse_y
-            angle = math. atan(x_length / y_length)
-            print(slope)
-            print(y_int)
-            print(angle)
+            cooldown_P_attk.append(pygame.time.get_ticks())
+            target_x, target_y = pygame.mouse.get_pos()
+            a_1 = P_attack_1(f.rect.centerx/1.2, f.rect.centery/1.5, target_x, target_y)
+            if cooldown_P_attk[0] - cooldown_P_attk[1] == 400:
+                attacks.append(a_1)
+            else:
+                cooldown_P_attk.remove(cooldown_P_attk[0])
+
+        if
 
 
 
@@ -133,7 +156,7 @@ while run:
         score = 0
         display_score_message = my_font.render("Score: " + str(score), True, (255, 255, 255))
         f = Player(40, 60)
-        e = Enemy(200, 100)
+        e = Enemy(200, 100, 7, 7)
         screen.fill((r, g, b))
         screen.blit(display_start_message, (100, 250))
         pygame.display.update()
@@ -142,9 +165,16 @@ while run:
         screen.fill((r, g, b))
         screen.blit(display_name, (0, 0))
         screen.blit(display_message, (0, 15))
+        screen.blit(display_hit_points, (0, 30))
+        for e_1 in e_attacks:
+            e_1.move_to_e_1()
+            screen.blit(e_1.image, e_1.rect)
+        for a_1 in attacks:
+            a_1.move()
+            screen.blit(a_1.image, a_1.rect)
         screen.blit(f.image, f.rect)
+        e.move_to()
         screen.blit(e.image, e.rect)
-        screen.blit(a_1.image, a_1.rect)
         pygame.display.update()
 
 
